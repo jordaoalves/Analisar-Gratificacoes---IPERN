@@ -1,0 +1,182 @@
+
+<center>
+
+![](https://uploaddeimagens.com.br/images/002/610/381/full/logoMD.png){width=130 height=110px}
+
+**INSTITUTO DE PREVIDÊNCIA DOS SERVIDORES DO ESTADO RIO GRANDE DO NORTE**
+
+**Fone ( 84 ) 3232 – 2901/2902 / Fone-Fax (84) 3232-2903**
+
+**Rua Jundiaí, 410 Tirol, CEP: 59020-120**
+
+**Email: previdênciarn@rn.gov.br**
+  
+</center>
+
+<br />
+<br />
+
+<center>
+
+### **DESPACHO DA `r paste(responsavel)`**
+
+</center>
+
+<br />
+
+#### CERTIFICAMOS que foram examinadas fichas financeiras do período de `r paste(dataRage)` e encontradas disponiveis para análise Fichas Financeiras do(s) seguinte(s) período(s): `r contabilizaDatas(valoresIncidentesDespacho[,1])`, que contém(êm) incidência das Contribuições Previdenciárias sobre a(s) vantagem(ns) abaixo indicada(s), conforme Processo de n° `r paste(nProcesso)`:
+
+<br />
+
+```{r echo = FALSE, results = "asis"}
+
+
+mensagemRubrica <- function(rubrica){
+  
+  options(Encoding="UTF-8")
+  
+  switch(rubrica, 
+         "113" = "Gratificação de Insalubridade (cód. 113) no período de ", 
+         "408" = "Gratificação de Insalubridade (cód. 408) no período de ", 
+         "47" = "Gratificação de Insalubridade (cód. 47) no período de ", 
+         
+         "188" = 	"Gratificação de Plantão (cód. 188) no período de ",
+         "441" = 	"Gratificação de Plantão (cód. 441) no período de ",
+         "35" = 	"Gratificação de Plantão em Unidade de Saúde (cód. 35) no período de ",
+         
+         "442" = "Gratificação de Adicional Noturno (cód. 442) no período de ",
+         "190" = "Gratificação de Adicional Noturno (cód. 190) no período de ",
+         "37" = "Gratificação de Adicional Noturno (cód. 37) no período de ", 
+         
+         "200" = "Vantagem Pessoal Lei 6.192 Art. 11 (cód. 200) no período de ",
+         
+         "162" = "GDAAC Incorporada - Grat. Desemp. Ativ. Alta Complexidade (cód. 162) no período de ",
+         "299" = "Grat. Desempenho De Atividade De Alta Complexidade - GDAAC (cód. 299) no período de ",
+  
+         "51" = "Gratificação De Desempenho Em Serviço De Saúde - GRADES (cód. 51) no período de ", 
+         "118" =  "Vantagem Pessoal Do Art. 15 Da Lc Nº 333/2006 (cód. 118) no período de ",
+         "131" = "Plantão Eventual (cód. 131) no período de ",
+         "224" = "Diferença De Nível - Vencimento (cód. 224) no período de ",
+         "403" = "Indenização (cód. 403) no período de ",
+         
+         "465" = "GRADES ART. 1º LEI 6271 (cód. 465) no período de ",
+         "478" = "GRAT. ASS. ESP. - GRAE (cód. 478) no período de ",
+         "907" = "GRAT ARC. (cód. 907) no período de ",
+         "401" = "VENCIMENTOS (cód. 401) no período de ",
+         "336" = "GRAT. ASS. ESP. - GRAE (cód. 336) no período de ",
+         "331" = "LIMINAR JUDICIAL Art. 11 (cód. 331) no período de ",
+         "208" = "GRADES - ART 1º LEI 6271 (cód. 208) no período de ",
+         "191" = "GRAT. PERMAN.LEI 5.334 (cód. 191) no período de ",
+         "185" = "Gratificação de COMPL.SALARIAL DEC.6045 (cód. 185) no período de ",
+         
+         "59" = "Vantagem Pessoal Lei 6.192 Art. 11 (cód. 59) no período de ",
+         "291" = "Gratificação de Jornada Especial (cód. 291) no período de ",
+         "293" = "Gratificação Especial de Localização Geográfica (cód. 293) no período de ",
+         "295" = "Gratificação Atividade Estadual - GAEST (cód. 295) no período de ")
+
+}
+
+# rubricasIncidentesMatch = colnames(valoresIncidentesCompleta)[colnames(valoresIncidentesCompleta) %in% rubricas]
+  
+#  valoresIncidentesDespacho <- valoresIncidentesCompleta  %>% select(rubricasIncidentesMatch)
+
+ #valoresIncidentesDespacho <- valoresIncidentes  %>% select(matches(rubricas))
+
+# valoresIncidentesDespacho <- cbind.data.frame(valoresIncidentesCompleta[1],valoresIncidentesDespacho)
+
+dfM <- data.frame()
+  
+  for (variable in 2:ncol(valoresIncidentesDespacho)) {
+    
+mensagem <-      if (variable == length(valoresIncidentesDespacho)) {
+                paste0(mensagemRubrica(colnames(valoresIncidentesDespacho[variable])),
+               contabilizaDatas(valoresIncidentesDespacho[is.na(valoresIncidentesDespacho[variable]) == FALSE,]$Ano),".")
+                } else if (variable == length(valoresIncidentesDespacho)-1) {
+                paste0(mensagemRubrica(colnames(valoresIncidentesDespacho[variable])),
+                 contabilizaDatas(valoresIncidentesDespacho[is.na(valoresIncidentesDespacho[variable]) == FALSE,]$Ano)," e")
+                } else {
+                paste0(mensagemRubrica(colnames(valoresIncidentesDespacho[variable])),
+               contabilizaDatas(valoresIncidentesDespacho[is.na(valoresIncidentesDespacho[variable]) == FALSE,]$Ano),";")
+                } # end if else if else
+
+    dfM <- c(dfM,mensagem)
+    
+    
+  }# end for
+
+template <- "* #### %s
+
+" # dont't forget the newline
+
+for (i in seq(length(dfM))) {
+  current <- dfM[[i]]
+  cat(sprintf(template, current))
+}
+
+
+
+```
+
+<br />
+
+
+```{r echo = FALSE, results = "asis"}
+
+
+if (responsavel == "CCONTRI") {
+  
+mensagemFinal <- paste0("À CFP para conhecimento. Em seguida, sugerimos o envio do processo ", destinatario,", ", 
+"para as devidas providências. CCONTRI - IPERN, " , escreveDataPorExtenso(dataDespacho),".")
+                          
+}else if ( responsavel == "CFP" ) {
+  
+mensagemFinal <- paste0("Conforme solicitado segue-se ", destinatario, ", ", "para as devidas providências. CFP - IPERN, " , escreveDataPorExtenso(dataDespacho),".")
+  
+}
+
+
+template <- "#### %s
+
+" # dont't forget the newline
+
+for (i in seq(length(mensagemFinal))) {
+  current <- mensagemFinal[i]
+  cat(sprintf(template, current))
+}
+
+```
+
+<br />
+<br />
+
+<div align="center">
+
+```{r echo = FALSE, results = "asis"}
+
+if (responsavel == "CCONTRI") {
+  
+  responsavelDespacho <- c("**Maria Conceição Moura da Silva**","Subcoordenadora de Compensação",
+"Previdenciária do IPERN")
+                          
+}else if ( responsavel == "CFP" ) {
+  
+responsavelDespacho <- c("**Maria Alcilene Silva Fernandes**","Coordenadora de Finanças,",
+"Planejamento e Contabilidade","Previdenciária do IPERN")
+  
+}
+
+
+template <- "#### %s
+
+" # dont't forget the newline
+
+for (i in seq(length(responsavelDespacho))) {
+  current <- responsavelDespacho[i]
+  cat(sprintf(template, current))
+}
+
+```
+</div>
+
+<br />
+<br />

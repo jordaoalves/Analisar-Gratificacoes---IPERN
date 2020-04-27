@@ -1,0 +1,32 @@
+library(shinydashboard)
+library("shinyjs",warn.conflicts = FALSE)
+library("stats",warn.conflicts = FALSE)
+library("shiny",warn.conflicts = FALSE)
+library("shinyWidgets",warn.conflicts = FALSE)
+library(dplyr)
+library(pdftools)
+library(tabulizer)
+library(tidyverse)
+library(stringi)
+library(stringr)
+library(rmarkdown)
+library(lubridate)
+library(DT)
+
+source('leitorPDF9501.R')
+source('leitorPDF.R')
+source('lerPdf9500.R')
+source('lerPdf01.R')
+source('lerPdf.R')
+source('tabelaValoresIncidentes9501.R')
+source('tabelaContribuicaoTotalCompleta9501.R')
+source('tabelaValoresIncidentes.R')
+source('tabelaContribuicaoTotalCompleta.R')
+source('escreveDataPorExtenso.R')
+source('contabilizaDatas.R')
+source('mensagemRubrica.R')
+
+
+#diretorio <- "C:/Users/Jordão Alves/Desktop/analisarAtestadoGratificacao"
+
+#anosFolha9501 <- c(1995,1996,1997,1998,1999,2000)

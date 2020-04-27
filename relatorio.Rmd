@@ -1,0 +1,19 @@
+
+
+```{r echo = FALSE, results = "asis"}
+
+if ( is.null(diretorioImp9501) == FALSE ) {
+  
+  datatable(tabelaContribuicaoTotal9501,caption = 'Tabela Auxiliar das contribuições para as Fichas Financeiras nos períodos de 1995 até julho de 2001 ', filter = 'top', options = list(
+  pageLength = 15, autoWidth = TRUE))
+  
+}
+
+if ( is.null(diretorioImp)  == FALSE  ) {
+  
+  datatable(tabelaContribuicaoTotal,caption = 'Tabela Auxiliar das contribuições para as Fichas Financeiras a partir de agosto de 2001', filter = 'top', options = list(pageLength = 15, autoWidth = TRUE))
+  
+}
+
+```
+
